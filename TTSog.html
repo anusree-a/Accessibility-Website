@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GROK-LIKE ACCESSIBILITY WEBSITE</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #17252A;
+            color: #FEFFFF;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+            overflow-x: hidden;
+            text-transform: uppercase;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            background-color: #DEF2F1;
+            padding: 5vw;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            position: relative;
+            animation: fadeIn 1s ease-in-out;
+            margin: 20px 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            color: #3AAFA9;
+            margin-bottom: 25px;
+            animation: slideIn 0.8s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .button {
+            background-color: #2B7A78;
+            color: #FEFFFF;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin: 10px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background-color: #3AAFA9;
+        }
+        .button:active {
+            transform: translateY(4px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+        .stop-button {
+            background-color: #7A2B2B; /* Red for stop */
+        }
+        .stop-button:hover {
+            background-color: #AF3A3A;
+        }
+        .section {
+            display: none;
+            margin: 20px 0;
+            animation: fadeInSection 0.6s ease-in-out;
+        }
+        @keyframes fadeInSection {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        textarea, input[type="file"] {
+            width: 100%;
+            max-width: 100%;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #2B7A78;
+            background-color: #FEFFFF;
+            color: #17252A;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        textarea:hover, input[type="file"]:hover {
+            border-color: #3AAFA9;
+        }
+        select {
+            width: 100%;
+            max-width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #2B7A78;
+            background-color: #FEFFFF;
+            color: #17252A;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        select:hover {
+            border-color: #3AAFA9;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: #3AAFA9;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .back-button {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background-color: #2B7A78;
+            color: #FEFFFF;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            display: none;
+        }
+        .back-button:hover {
+            background-color: #3AAFA9;
+        }
+        .graphic {
+            position: absolute;
+            opacity: 0.15;
+            pointer-events: none;
+            animation: pulse 3s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .graphic-top {
+            top: -60px;
+            left: -60px;
+            width: clamp(150px, 25vw, 250px);
+            height: clamp(150px, 25vw, 250px);
+            background: radial-gradient(circle, #3AAFA9, transparent);
+        }
+        .graphic-bottom {
+            bottom: -60px;
+            right: -60px;
+            width: clamp(150px, 25vw, 250px);
+            height: clamp(150px, 25vw, 250px);
+            background: radial-gradient(circle, #3AAFA9, transparent);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .button {
+                padding: 12px 20px;
+                display: block;
+                margin: 10px auto;
+            }
+            h1 {
+                margin-bottom: 15px;
+            }
+            .graphic-top, .graphic-bottom {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 8px 16px;
+            }
+            .container {
+                padding: 15px;
+                margin: 10px;
+            }
+            textarea, input[type="file"], select {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- BACK BUTTON -->
+        <button class="back-button" onclick="showSection('homeScreen')">BACK</button>
+
+        <!-- INITIAL SCREEN -->
+        <div id="homeScreen">
+            <h1>WELCOME TO ACCESSIBILITY TOOLS</h1>
+            <button class="button" onclick="showSection('textToSpeech')">TEXT-TO-SPEECH</button>
+            <button class="button" onclick="showSection('hearingTest')">HEARING TEST</button>
+        </div>
+
+        <!-- TEXT-TO-SPEECH SECTION -->
+        <div id="textToSpeech" class="section">
+            <h1>TEXT-TO-SPEECH</h1>
+            <textarea id="textInput" rows="5" placeholder="ENTER TEXT HERE..."></textarea>
+            <input type="file" id="pdfInput" accept=".pdf">
+            <select id="languageSelect">
+                <option value="en-US">ENGLISH</option>
+                <option value="hi-IN">HINDI</option>
+                <!-- <option value="es-ES">SPANISH</option>
+                <option value="fr-FR">FRENCH</option> -->
+            </select>
+            <button class="button" onclick="readText()">READ ALOUD</button>
+            <button class="button stop-button" onclick="stopReading()">STOP</button>
+        </div>
+
+        <!-- HEARING TEST SECTION -->
+        <div id="hearingTest" class="section">
+            <h1>HEARING TEST</h1>
+            <button class="button" onclick="startHearingTest()">START HEARING TEST</button>
+            <div id="hearingControls" style="display: none;">
+                <p id="currentFreq" style="color: #3AAFA9;"></p>
+                <button class="button" onclick="canHear()">I CAN HEAR</button>
+                <button class="button" onclick="cannotHear()">I CAN'T HEAR</button>
+                <button class="button stop-button" onclick="stopHearing()">STOP</button>
+            </div>
+            <div id="result"></div>
+        </div>
+
+        <!-- GRAPHICS -->
+        <div class="graphic graphic-top"></div>
+        <div class="graphic graphic-bottom"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <script>
+        // HEARING TEST VARIABLES
+        const frequencies = [250, 500, 1000, 2000, 4000];
+        let currentFreqIndex = 0;
+        let currentVolume = 0.2;
+        let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let oscillator = null;
+        let gainNode = null;
+        let failedFrequencies = [];
+
+        // SCREEN NAVIGATION
+        function showSection(sectionId) {
+            const sections = ['homeScreen', 'textToSpeech', 'hearingTest'];
+            const backButton = document.querySelector('.back-button');
+            const hearingControls = document.getElementById('hearingControls');
+
+            if (oscillator && sectionId !== 'hearingTest') {
+                oscillator.stop();
+                oscillator = null;
+                hearingControls.style.display = 'none';
+                document.getElementById('result').innerText = '';
+            }
+
+            if (window.speechSynthesis.speaking && sectionId !== 'textToSpeech') {
+                window.speechSynthesis.cancel();
+            }
+
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                section.style.display = id === sectionId ? 'block' : 'none';
+            });
+            backButton.style.display = sectionId === 'homeScreen' ? 'none' : 'block';
+        }
+
+        // BASIC LANGUAGE DETECTION FUNCTION
+        function detectLanguage(text, selectedLang) {
+            const hindiPattern = /[\u0900-\u097F]/; // Devanagari script for Hindi
+            const spanishPattern = /[áéíóúñ¿¡]/i; // Common Spanish characters
+            const frenchPattern = /[àâçéèêëîïôûùüÿœæ]/i; // Common French characters
+            const englishPattern = /^[a-zA-Z0-9\s.,!?]+$/; // Basic English (Latin alphabet)
+
+            if (selectedLang === 'hi-IN' && !hindiPattern.test(text)) {
+                return false;
+            } else if (selectedLang === 'es-ES' && !spanishPattern.test(text) && !englishPattern.test(text)) {
+                return false;
+            } else if (selectedLang === 'fr-FR' && !frenchPattern.test(text) && !englishPattern.test(text)) {
+                return false;
+            } else if (selectedLang === 'en-US' && !englishPattern.test(text) && hindiPattern.test(text)) {
+                return false;
+            }
+            return true; // Default to true if no clear mismatch
+        }
+
+        // TEXT-TO-SPEECH FUNCTIONALITY
+        function readText() {
+            const text = document.getElementById('textInput').value;
+            const fileInput = document.getElementById('pdfInput').files[0];
+            const language = document.getElementById('languageSelect').value;
+
+            if (text) {
+                if (detectLanguage(text, language)) {
+                    speak(text, language);
+                } else {
+                    alert('ERROR: THE TEXT IS NOT IN THE SELECTED LANGUAGE');
+                }
+            } else if (fileInput) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const typedArray = new Uint8Array(e.target.result);
+                    pdfjsLib.getDocument(typedArray).promise.then(pdf => {
+                        let textContent = '';
+                        const pagePromises = [];
+                        for (let i = 1; i <= pdf.numPages; i++) {
+                            pagePromises.push(pdf.getPage(i).then(page => page.getTextContent()));
+                        }
+                        Promise.all(pagePromises).then(pages => {
+                            pages.forEach(page => {
+                                page.items.forEach(item => {
+                                    textContent += item.str + ' ';
+                                });
+                            });
+                            if (detectLanguage(textContent, language)) {
+                                speak(textContent, language);
+                            } else {
+                                alert('ERROR: THE DOCUMENT IS NOT IN THE SELECTED LANGUAGE');
+                            }
+                        });
+                    });
+                };
+                reader.readAsArrayBuffer(fileInput);
+            } else {
+                alert('PLEASE ENTER TEXT OR UPLOAD A PDF.');
+            }
+        }
+
+        function speak(text, language) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = language;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // STOP READING FUNCTION FOR TTS
+        function stopReading() {
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // HEARING TEST FUNCTIONALITY
+        function startHearingTest() {
+            document.getElementById('hearingControls').style.display = 'block';
+            document.getElementById('result').innerText = '';
+            currentFreqIndex = 0;
+            currentVolume = 0.2;
+            failedFrequencies = [];
+            playSound();
+        }
+
+        function playSound() {
+            if (oscillator) oscillator.stop();
+            oscillator = audioContext.createOscillator();
+            gainNode = audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            oscillator.frequency.value = frequencies[currentFreqIndex];
+            gainNode.gain.value = currentVolume;
+            oscillator.start();
+            document.getElementById('currentFreq').innerText = 
+                `TESTING ${frequencies[currentFreqIndex]} HZ AT ${Math.round(currentVolume * 100)}% VOLUME`;
+        }
+
+        function canHear() {
+            if (oscillator) {
+                oscillator.stop();
+                oscillator = null;
+            }
+            currentFreqIndex++;
+            currentVolume = 0.2;
+            if (currentFreqIndex < frequencies.length) {
+                playSound();
+            } else {
+                showResult();
+            }
+        }
+
+        function cannotHear() {
+            if (oscillator) {
+                oscillator.stop();
+                oscillator = null;
+            }
+            currentVolume += 0.2;
+            if (currentVolume <= 1) {
+                playSound();
+            } else {
+                failedFrequencies.push(frequencies[currentFreqIndex]);
+                currentFreqIndex++;
+                currentVolume = 0.2;
+                if (currentFreqIndex < frequencies.length) {
+                    playSound();
+                } else {
+                    showResult();
+                }
+            }
+        }
+
+        // STOP HEARING FUNCTION
+        function stopHearing() {
+            if (oscillator) {
+                oscillator.stop();
+                oscillator = null;
+                document.getElementById('hearingControls').style.display = 'none';
+                document.getElementById('result').innerText = 'HEARING TEST STOPPED';
+            }
+        }
+
+        function showResult() {
+            document.getElementById('hearingControls').style.display = 'none';
+            const failedCount = failedFrequencies.length;
+            let resultText = '';
+            if (failedCount === 0) {
+                resultText = 'NO NEED TO CONSULT A DOCTOR; YOUR HEARING IS FINE!';
+            } else if (failedCount <= 2) {
+                resultText = 'YOU MAY WANT TO CONSULT A DOCTOR FOR A DETAILED HEARING CHECK.';
+            } else {
+                resultText = 'PLEASE CONSULT A DOCTOR IMMEDIATELY REGARDING YOUR HEARING.';
+            }
+            document.getElementById('result').innerText = resultText;
+        }
+
+        // INITIALIZE BACK BUTTON STATE ON PAGE LOAD
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('homeScreen');
+        });
+    </script>
+</body>
+</html>
