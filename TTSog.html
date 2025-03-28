@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GROK-LIKE ACCESSIBILITY WEBSITE</title>
+    <title>ACCESSIBILITY WEBSITE</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -278,9 +278,7 @@
 
         // BASIC LANGUAGE DETECTION FUNCTION
         function detectLanguage(text, selectedLang) {
-            const hindiPattern = /[\u0900-\u097F]/; // Devanagari script for Hindi
-            const spanishPattern = /[áéíóúñ¿¡]/i; // Common Spanish characters
-            const frenchPattern = /[àâçéèêëîïôûùüÿœæ]/i; // Common French characters
+            const hindiPattern = /[\u0900-\u097F]/; // Devanagari script for Hindi         
             const englishPattern = /^[a-zA-Z0-9\s.,!?]+$/; // Basic English (Latin alphabet)
 
             if (selectedLang === 'hi-IN' && !hindiPattern.test(text)) {
